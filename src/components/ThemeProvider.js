@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState, createContext, useContext } from 'react';
 
-const ThemeContext = React.createContext()
-const ThemeProvider = (props) =>{
+const ThemeContext = createContext();
 
-    return (
-        <React.Fragment>
+const ThemeProvider = (props) => {
+  const [globalTheme, setGlobalTheme] = useState('light');
 
-        </React.Fragment>
-    )
-}
+  const toggleGlobalTheme = () => {
+    setGlobalTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+  };
 
-export {ThemeProvider,ThemeContext}
+  return (
+    <ThemeContext.Provider value={{ globalTheme, toggleGlobalTheme }}>
+      {props.children}
+    </ThemeContext.Provider>
+  );
+};
+
+export { ThemeProvider, ThemeContext };
